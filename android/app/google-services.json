@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "693891406723",
+    "project_id": "bodytech-test",
+    "storage_bucket": "bodytech-test.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693891406723:android:9c1f3cecc61bfd0f3c34b6",
+        "android_client_info": {
+          "package_name": "com.bodytech.prueba"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVLNqbaaGPAfCfdx4tk3KUP9-Ik9T2fgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693891406723:android:9e010d2223cbb10e3c34b6",
+        "android_client_info": {
+          "package_name": "com.bodytech.prueba.bodytech_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVLNqbaaGPAfCfdx4tk3KUP9-Ik9T2fgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
