@@ -31,7 +31,7 @@ class AuthController extends GetxController {
 
   // Lógica de Registro con validación manual extra
   Future<void> register(String email, String password) async {
-    if (password.length < 6) { // Requisito técnico 
+    if (password.length < 6) {
       Get.snackbar("Error", "La contraseña debe tener al menos 6 caracteres");
       return;
     }
@@ -39,7 +39,8 @@ class AuthController extends GetxController {
     try {
       isLoading.value = true;
       await _authProvider.signUp(email, password);
-      Get.offAllNamed('/home');
+      Get.snackbar("Éxito", "Cuenta creada correctamente", snackPosition: SnackPosition.BOTTOM);
+      Get.offAllNamed('/login');
     } catch (e) {
       Get.snackbar("Error de Registro", e.toString());
     } finally {

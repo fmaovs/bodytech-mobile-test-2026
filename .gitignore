@@ -43,3 +43,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase (opcional, pero recomendado si usas herramientas CLI)
+.firebase/
+firebase-debug.log
+
+# Hive y archivos generados
+*.g.dart
+*.freezed.dart
+
+# Mac & Windows folders
+.DS_Store
+Thumbs.db
