@@ -5,13 +5,10 @@ import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
 
 class LoginView extends StatelessWidget {
-  // Buscamos el controlador que ya inyectamos en el main.dart
   final AuthController authController = Get.find<AuthController>();
   
-  // Llave para validar el formulario
   final _formKey = GlobalKey<FormState>();
   
-  // Controladores de texto para capturar lo que el usuario escribe
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -29,7 +26,6 @@ class LoginView extends StatelessWidget {
               const Text("Bienvenido", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
               const SizedBox(height: 30),
               
-              // Campo de Email con validación GetX
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: "Correo Electrónico", border: OutlineInputBorder()),
@@ -41,7 +37,6 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               
-              // Campo de Contraseña con validación de longitud (Requisito 1.2)
               TextFormField(
                 controller: _passwordController,
                 decoration: const InputDecoration(labelText: "Contraseña", border: OutlineInputBorder()),
@@ -54,7 +49,6 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 25),
               
-              // Botón reactivo que cambia a carga cuando isLoading es true
               Obx(() => authController.isLoading.value 
                 ? const CircularProgressIndicator() 
                 : SizedBox(
