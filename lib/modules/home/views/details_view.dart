@@ -35,9 +35,14 @@ class DetailsView extends StatelessWidget{
 
             Obx(() {
               if(controller.currentDetails.isEmpty){
-                return const Center(child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: CircularProgressIndicator(color: Color(0xFFEB6608)),
+                return const Center(
+                  child: Column(
+                  children: [
+                    SizedBox(height: 50),
+                    CircularProgressIndicator(color: Color(0xFFEB6608)),
+                    SizedBox(height: 10),
+                    Text("Cargando detalles..."),
+                  ],
                 ));
               }
               final details = controller.currentDetails;

@@ -41,6 +41,9 @@ class PokemonController extends GetxController {
   var currentDetails = {}.obs;
 
   Future<void> loadSinglePokemonDetails(int id, String url) async {
+
+    currentDetails.value = {};
+
     final localData = StorageService.getPokemonDetail(id);
     if(localData != null) {
       currentDetails.value = localData;
