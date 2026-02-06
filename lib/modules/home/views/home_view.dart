@@ -1,6 +1,8 @@
 import 'package:bodytech_test/data/models/pokemon_model.dart';
 import 'package:bodytech_test/modules/home/controllers/pokemon_controller.dart';
 import 'package:bodytech_test/modules/home/views/details_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +16,13 @@ class HomeView extends StatelessWidget{
       appBar: AppBar(
           title: const Text("BodyTech Pokedex"),
         actions: [
-          IconButton(icon: const Icon(Icons.logout), onPressed: () => Get.offAllNamed('/login')),
+          IconButton(icon: const Icon(Icons.logout), 
+          onPressed: () async{
+            await FirebaseAuth.instance.signOut();
+
+            Get.offAllNamed('/login');
+          }
+          ),
         ],
       ),
       body: Obx(() {
