@@ -1,4 +1,5 @@
 import 'package:bodytech_test/modules/auth/views/register_view.dart';
+import 'package:bodytech_test/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
@@ -62,6 +63,7 @@ class LoginView extends StatelessWidget {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           authController.login(_emailController.text, _passwordController.text);
+                          MaterialPageRoute(builder: (_) => HomeView());
                         }
                       },
                       child: const Text("Ingresar"),

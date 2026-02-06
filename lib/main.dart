@@ -7,6 +7,7 @@ import 'firebase_options.dart';
 import 'core/storage_service.dart';
 import 'modules/auth/views/login_view.dart';
 import 'modules/auth/views/register_view.dart';
+import 'modules/home/views/home_view.dart';
 import 'modules/auth/controllers/auth_controller.dart';
 import 'data/providers/auth_provider.dart' as custom;
 
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/login', page: () => LoginView()),
         GetPage(name: '/register', page: () => RegisterView()),
+        GetPage(name: '/home', page: () => HomeView()),
         // La ruta /register la comentamos o la creamos en el siguiente paso
         // GetPage(name: '/register', page: () => const RegisterView()), 
       ],
