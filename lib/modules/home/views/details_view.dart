@@ -1,76 +1,60 @@
-import 'package:bodytech_test/data/models/pokemon_model.dart';
-import 'package:bodytech_test/modules/home/controllers/pokemon_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controllers/pokemon_controller.dart';
+import '../../../data/models/pokemon_model.dart';
 
-class DetailsView extends StatelessWidget{
+class DetailsView extends StatelessWidget {
   final Pokemon pokemon;
+  final PokemonController controller = Get.find<PokemonController>();
 
-  final PokemonController  controller = Get.find<PokemonController>();
-
-  DetailsView({super.key, required this.pokemon}){
-    final parts = pokemon.url.split('/');
-    final int id = int.parse(parts[parts.length - 2]);
-
+  DetailsView({super.key, required this.pokemon}) {
+    final id = int.parse(pokemon.url.split('/').reversed.elementAt(1));
     controller.loadSinglePokemonDetails(id, pokemon.url);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F4F4),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-          title: Text(pokemon.name.toUpperCase(), 
-          style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.5)),
-        backgroundColor: const Color(0xFFEB6608),
+        title: Text(pokemon.name.toUpperCase()),
+        backgroundColor: const Color(0xFF2B2D2E),
+        foregroundColor: Colors.white,
         elevation: 0,
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildHeader(),
-
-            const SizedBox(height: 20,),
-
+            Container(
+              height: 250,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color(0xFF2B2D2E),
+                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50)),
+              ),
+              child: Hero(tag: pokemon.imageUrl, child: Image.network(pokemon.imageUrl, fit: BoxFit.contain)),
+            ),
             Obx(() {
-              if(controller.currentDetails.isEmpty){
-                return const Center(
-                  child: Column(
-                  children: [
-                    SizedBox(height: 50),
-                    CircularProgressIndicator(color: Color(0xFFEB6608)),
-                    SizedBox(height: 10),
-                    Text("Cargando detalles..."),
-                  ],
-                ));
-              }
+              if(controller.currentDetails.isEmpty) return const Padding(padding: EdgeInsets.all(50), child: CircularProgressIndicator(color: Color(0xFFEB6608)));
+
               final details = controller.currentDetails;
-
-              return Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildInfoMetric("Altura", "${details['height'] / 10} m"),
-                      _buildInfoMetric("Peso", "${details['weight'] / 10} kg"),
-                    ],
-                  ),
-                  const SizedBox(height: 20,),
-
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Estadísticas de poder", 
-                        style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF2B2D2E))),
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _metric("PESO", "${details['weight']/10} kg"),
+                        _metric("ALTURA", "${details['height']/10} m"),
+                      ],
                     ),
-                  ),
-                  ... (details['stats'] as List).map((s) => _buildStatBar(
-                    s['stat']['name'].toString().toUpperCase(), 
-                    s['base_stat']
-                    )).toList(),
-                ],
+                    const Divider(height: 40),
+                    const Align(alignment: Alignment.centerLeft, child: Text("ESTADÍSTICAS BASE", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16))),
+                    const SizedBox(height: 15),
+                    ...(details['stats'] as List).map((s) => _statBar(s['stat']['name'], s['base_stat'])).toList(),
+                  ],
+                ),
               );
             }),
           ],
@@ -79,52 +63,27 @@ class DetailsView extends StatelessWidget{
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        color: Color( 0xFFEB6608),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(40),
-          bottomRight: Radius.circular(40),
-        ),
-      ),
-      child: Hero(
-        tag: pokemon.imageUrl,
-        child: Image.network(pokemon.imageUrl, height: 280, fit: BoxFit.contain),
-      ),
-    );
+  Widget _metric(String label, String value) {
+    return Column(children: [
+      Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+      Text(label, style: const TextStyle(color: Color(0xFFEB6608), fontSize: 12, fontWeight: FontWeight.bold)),
+    ]);
   }
 
-  Widget _buildInfoMetric(String label, String value) {
-    return Column(
-      children: [
-        Text(value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF2B2D2E))),
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold)),
-      ],
-    );
-  }
-
-  Widget _buildStatBar(String label, int value) {
+  Widget _statBar(String label, int value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
-              Text("$value", style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFEB6608))),
-            ],
-          ),
-          const SizedBox(height: 5),
+          Text(label.toUpperCase(), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 4),
           LinearProgressIndicator(
-            value: value / 150, 
-            backgroundColor: Colors.grey[300],
+            value: value / 150,
+            backgroundColor: const Color(0xFFF5F4F4),
             color: const Color(0xFFEB6608),
-            minHeight: 6,
-            borderRadius: BorderRadius.circular(10),
+            minHeight: 8,
+            borderRadius: BorderRadius.circular(5),
           ),
         ],
       ),
