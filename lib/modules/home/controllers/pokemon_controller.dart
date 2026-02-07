@@ -5,6 +5,7 @@ import 'package:bodytech_test/data/providers/pokemon_provider.dart';
 
 class PokemonController extends GetxController {
   final PokemonProvider _provider = PokemonProvider();
+  
   var pokemonList = <Pokemon>[].obs;
   var isLoading = true.obs;
   var currentDetails = {}.obs;
@@ -12,16 +13,22 @@ class PokemonController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Cargar cache 
+    // Carga caché 
     _loadLocalData();
 
     loadPokemons();
   }
 
   void _loadLocalData() {
-    final offlineData = StorageService.getCachedPokemon();
-    if (offlineData != null) {
-      pokemonList.value = offlineData.map((item) => Pokemon.fromJson(item)).toList();
+    try {
+      final offlineData = StorageService.getCachedPokemon();
+      if (offlineData != null) {
+        pokemonList.value = offlineData.map((item) {
+          return Pokemon.fromJson(Map<String, dynamic>.from(item));
+        }).toList();
+      }
+    } catch (e) {
+      print("Error leyendo caché: $e");
     }
   }
 
@@ -30,18 +37,25 @@ class PokemonController extends GetxController {
       isLoading(true);
       final rawData = await _provider.getPokemonList();
       
-      // Guardar en Hive lo nuevo de la API
+      // Guardar en Hive
       await StorageService.savePokemonData(rawData);
       
       pokemonList.value = rawData.map((item) => Pokemon.fromJson(item)).toList();
     } catch (e) {
       _loadLocalData();
-      if (pokemonList.isEmpty) {
-        Get.snackbar("Error", "No hay conexión ni datos locales",
-            snackPosition: SnackPosition.BOTTOM);
+      
+      if (pokemonList.isNotEmpty) {
+        Get.snackbar(
+          "Modo Offline", 
+          "Mostrando datos guardados localmente",
+          snackPosition: SnackPosition.BOTTOM,
+        );
       } else {
-        Get.snackbar("Modo Offline", "Mostrando datos guardados localmente",
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar(
+          "Error", 
+          "Sin conexión y sin datos locales",
+          snackPosition: SnackPosition.BOTTOM,
+        );
       }
     } finally {
       isLoading(false);
@@ -53,7 +67,7 @@ class PokemonController extends GetxController {
 
     final localData = StorageService.getPokemonDetail(id);
     if (localData != null) {
-      currentDetails.value = localData;
+      currentDetails.value = Map<String, dynamic>.from(localData);
       return;
     }
 
@@ -62,8 +76,11 @@ class PokemonController extends GetxController {
       currentDetails.value = remoteData;
       await StorageService.savePokemonDetail(id, remoteData);
     } catch (e) {
-      Get.snackbar("Error", "No se pudieron descargar los detalles",
-          snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar(
+        "Error", 
+        "No se pudieron obtener los detalles online",
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }

@@ -1,39 +1,43 @@
 # Bodytech Pokedex - Prueba Técnica
 
-¡Hola! Soy Mauricio Villanueva y esta es mi solución al reto técnico de Desarrollador Flutter para Bodytech. El objetivo fue crear una aplicación funcional, ágil y con una identidad visual alineada a la marca.
+¡Hola! Soy Mauricio Villanueva y esta es mi solución al reto técnico de Desarrollador Flutter para Bodytech. He construido esta aplicación enfocándome en crear un producto funcional, ágil y con una identidad visual alineada a la marca ("Sangre Naranja").
 
-## 🚀 Lo que usé para este proyecto
+**Link del repositorio:** [https://github.com/fmaovs/bodytech-mobile-test-2026](https://github.com/fmaovs/bodytech-mobile-test-2026)
 
-Traté de mantener las cosas simples pero potentes, usando herramientas que permiten que la app se mueva rápido:
+## ✅ Requisitos de la Prueba (Entregables)
 
-* **Flutter & Dart:** Para el desarrollo multiplataforma.
-* **GetX:** Lo usé para manejar el estado de la app y la navegación. Me gusta porque permite separar la lógica de la vista de forma muy limpia.
-* **Hive:** Esta fue mi elección para el modo offline. Si ya cargaste los Pokémon, puedes verlos sin internet porque se guardan en una base de datos local ligera.
-* **Firebase Auth:** Para que el registro e inicio de sesión sean reales y seguros.
-* **PokeAPI:** De donde traigo toda la información de los Pokémon en tiempo real.
+He cumplido con los siguientes puntos clave solicitados:
 
-## 🏗️ Cómo organicé el código
+* **Autenticación con Firebase:** Módulo completo de Login y Registro de usuarios.
+* **Consumo de API:** Integración con PokeAPI para obtener listado y detalles.
+* **Manejo de Estado:** Uso de **GetX** para una gestión reactiva.
+* **Persistencia Local (Modo Offline):** Implementación de **Hive** para que la app funcione sin conexión.
+* **Identidad Visual:** Interfaz personalizada con los colores corporativos de Bodytech.
 
-Dividí el proyecto en carpetas para que sea fácil de entender y escalar:
+## ⚙️ Requisitos del Sistema para Compilación
 
-1.  **Data:** Aquí están los modelos y lo que conecta con la API y Hive.
-2.  **Modules:** Separé la parte de Autenticación (Login/Registro) de la parte de la Pokedex (Home/Detalles).
-3.  **UI/UX:** Usé los colores "Sangre Naranja" (Naranja, Negro y Gris) para que la app se sienta parte del ecosistema Bodytech.
+Para garantizar el correcto funcionamiento del proyecto, se recomienda el siguiente entorno:
 
-## 🛠️ Cómo correr la app
+* **Flutter SDK:** ^3.0.0 o superior.
+* **Plataforma de pruebas:** Probado en dispositivo físico Samsung A54 (Android 14).
+* **Compatibilidad mínima:** Android 6.0 (API 21).
+* **Java:** JDK 11 o 17.
 
-1. Clonar el repositorio:
-   `git clone https://github.com/fmaovs/bodytech-mobile-test-2026`
-2. Instalar paquetes:
-   `flutter pub get`
-3. Asegurarse de tener el archivo `google-services.json` en `android/app/`.
-4. Ejecutar:
-   `flutter run`
+## 🚀 Tecnologías y Arquitectura
 
-## 📝 Notas del desarrollador
-* Implementé el uso de **Hero animations** para que al tocar un Pokémon, la imagen "vuele" a la siguiente pantalla, dándole un toque más premium.
-* La app tiene validaciones de formularios para evitar errores al registrarse.
-* Me enfoqué en que la arquitectura fuera lo suficientemente robusta para ser el inicio de una app más grande.
+Elegí estas herramientas para asegurar un rendimiento fluido:
 
----
-Mauricio Villanueva - 2026
+* **GetX:** Para separar la lógica de negocio de las vistas y manejar la navegación.
+* **Hive:** Una base de datos NoSQL ultra rápida para el almacenamiento local.
+* **Firebase Auth:** Para la gestión segura de sesiones de usuario.
+
+**Estructura del Proyecto:**
+* `data/`: Modelos de datos y proveedores (API/Hive).
+* `modules/`: Capas de lógica y vista divididas por funcionalidad (Auth y Home).
+* `core/`: Servicios globales como el almacenamiento persistente.
+
+## 🛠️ Cómo ejecutar el proyecto
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/fmaovs/bodytech-mobile-test-2026](https://github.com/fmaovs/bodytech-mobile-test-2026)
